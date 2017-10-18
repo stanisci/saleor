@@ -363,7 +363,7 @@ if ES_URL:
             'INDEX': os.environ.get('ELASTICSEARCH_INDEX_NAME', 'storefront'),
             'TIMEOUT': 5,
             'AUTO_UPDATE': True},
-        'new_elastic': {
+        'newelastic': {
             'BACKEND': 'saleor.search.backends.newelastic',
             'URLS': [ES_URL],
             'INDEX': os.environ.get('ELASTICSEARCH_INDEX_NAME', 'storefront'),
