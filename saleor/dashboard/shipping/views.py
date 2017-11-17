@@ -39,9 +39,7 @@ def shipping_method_edit(request, pk=None):
         return redirect('dashboard:shipping-method-detail', pk=method.pk)
     ctx = {'form': form, 'shipping_method': method}
     return TemplateResponse(
-        request,
-        'dashboard/shipping/form.html',
-        ctx)
+        request, 'dashboard/shipping/form.html', ctx)
 
 
 @superuser_required
@@ -82,17 +80,17 @@ def shipping_method_country_edit(request, shipping_method_pk, country_pk=None):
     if form.is_valid():
         method = form.save()
         msg = pgettext_lazy(
-            'dashboard message', 'Updated shipping method') \
+            'Dashboard message',
+            'Updated country shipping price %s') % (method,) \
             if country_pk else pgettext_lazy(
-            'Dashboard message', 'Added shipping method')
+            'Dashboard message', 'Added country shipping price %s') % (method,)
         messages.success(request, msg)
         return redirect(
             'dashboard:shipping-method-detail', pk=shipping_method_pk)
-    ctx = {'form': form, 'shipping_method_pk': shipping_method_pk}
+    ctx = {'form': form, 'shipping_method_pk': shipping_method_pk,
+           'method': method}
     return TemplateResponse(
-        request,
-        'dashboard/shipping/country/edit.html',
-        ctx)
+        request, 'dashboard/shipping/country/form.html', ctx)
 
 
 @superuser_required
@@ -110,6 +108,5 @@ def shipping_method_country_delete(
         return redirect(
             'dashboard:shipping-method-detail', pk=shipping_method_pk)
     return TemplateResponse(
-        request,
-        'dashboard/shipping/modal/country_confirm_delete.html',
+        request, 'dashboard/shipping/modal/country_confirm_delete.html',
         {'country': country, 'shipping_method_pk': shipping_method_pk})
