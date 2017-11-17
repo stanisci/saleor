@@ -13,6 +13,7 @@
     {% block meta %}
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+      <meta name="theme-color" content="#21915a" />
     {% endblock meta %}
 
     {% include 'favicon.html' %}
@@ -66,7 +67,7 @@
             </li>
             <li>
               <a href="{% url 'dashboard:index' %}" class="logo">
-                <svg data-src="{% static "dashboard/images/saleor_logo.svg" %}" height="38px" width="176px" />
+                <svg data-src="{% static "dashboard/images/logo.svg" %}" height="38px" width="176px" />
               </a>
             </li>
             <li class="search">
