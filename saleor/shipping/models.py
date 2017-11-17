@@ -28,17 +28,17 @@ class ShippingMethod(models.Model):
         blank=True, default='')
 
     class Meta:
-        verbose_name = pgettext_lazy('Shipping method model',
-                                     'shipping method')
-        verbose_name_plural = pgettext_lazy('Shipping method model',
-                                            'shipping methods')
+        verbose_name = pgettext_lazy(
+            'Shipping method model', 'shipping method')
+        verbose_name_plural = pgettext_lazy(
+            'Shipping method model', 'shipping methods')
         permissions = (
             ('view_shipping',
-             pgettext_lazy('Permission description',
-                           'Can view shipping method')),
+             pgettext_lazy(
+                 'Permission description', 'Can view shipping method')),
             ('edit_shipping',
-             pgettext_lazy('Permission description',
-                           'Can edit shipping method')))
+             pgettext_lazy(
+                 'Permission description', 'Can edit shipping method')))
 
     def __str__(self):
         return self.name
@@ -61,7 +61,8 @@ class ShippingMethodCountryQueryset(models.QuerySet):
             Q(country_code=country_code) |
             Q(country_code=ANY_COUNTRY))
         shipping = shipping.order_by('shipping_method_id')
-        shipping = shipping.values_list('shipping_method_id', 'id', 'country_code')
+        shipping = shipping.values_list(
+            'shipping_method_id', 'id', 'country_code')
         grouped_shipping = groupby(shipping, itemgetter(0))
         any_country = ANY_COUNTRY
 
@@ -69,9 +70,11 @@ class ShippingMethodCountryQueryset(models.QuerySet):
 
         for shipping_method_id, method_values in grouped_shipping:
             method_values = list(method_values)
-            # if there is any country choice and specific one remove any country choice
+            # if there is any country choice and specific one remove
+            # any country choice
             if len(method_values) == 2:
-                method = [val for val in method_values if val[2] != any_country][0]
+                method = [
+                    val for val in method_values if val[2] != any_country][0]
             else:
                 method = method_values[0]
             ids.append(method[1])
@@ -89,7 +92,8 @@ class ShippingMethodCountry(models.Model):
         currency=settings.DEFAULT_CURRENCY, max_digits=12, decimal_places=2)
     shipping_method = models.ForeignKey(
         ShippingMethod, related_name='price_per_country',
-        verbose_name=pgettext_lazy('Shipping method country field', 'shipping method'),)
+        verbose_name=pgettext_lazy(
+            'Shipping method country field', 'shipping method'),)
 
     objects = ShippingMethodCountryQueryset.as_manager()
 
